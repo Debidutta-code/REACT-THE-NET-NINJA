@@ -11,6 +11,8 @@ const Home = () => {
         { title: "Web Dev Top Tips", body: "lorem ipsum...", author: "Mohnish", id: 3 }
     ]);
 
+    const [name, setName] = useState("Mario");
+
     const handleDelete = (id) => {
         const newBlog = blogs.filter(blog => blog.id !== id);
         setBlogs(newBlog);
@@ -18,11 +20,14 @@ const Home = () => {
 
     useEffect(() => {
         console.log('use effect ran');
-    });
+        console.log(name);
+    }, [name]);
 
     return ( 
         <div className="home">
             <BlogList blogs = {blogs} title = "This is the Title..." id = {id} handleDelete = {handleDelete} />
+            <button onClick={() => setName("Dev")}>change button</button>
+            <p> {name} </p>
         </div>
     );
 }
