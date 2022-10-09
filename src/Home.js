@@ -5,25 +5,21 @@ const Home = () => {
 
     const id = 1;
 
-    const [blogs, setBlogs] = useState([
-        { title: "My new Website", body: "lorem ipsum...", author: "Mario", id: 1 },
-        { title: "Welcome Party", body: "lorem ipsum...", author: "Dev", id: 2 },
-        { title: "Web Dev Top Tips", body: "lorem ipsum...", author: "Mohnish", id: 3 }
-    ]);
-
-    const handleDelete = (id) => {
-        const newBlog = blogs.filter(blog => blog.id !== id);
-        setBlogs(newBlog);
-    }
+    const [blogs, setBlogs] = useState(null);
 
     useEffect(() => {
-        console.log('use effect ran');
-        console.log(blogs);
+        fetch('http://localhost:8000/blogs')
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                setBlogs(data);
+            });
     }, []);
 
     return ( 
         <div className="home">
-            <BlogList blogs = {blogs} title = "This is the Title..." id = {id} handleDelete = {handleDelete} />
+            {blogs && <BlogList blogs = {blogs} title = "This is the Title..." id = {id}/>}
         </div>
     );
 }
